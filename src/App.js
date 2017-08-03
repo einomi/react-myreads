@@ -3,21 +3,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
 import './App.css'
-
-const BOOK_SHELVES = [
-    {
-        id: 'currentlyReading',
-        name: 'Currently Reading'
-    },
-    {
-        id: 'wantToRead',
-        name: 'Want to Read'
-    },
-    {
-        id: 'read',
-        name: 'Read'
-    }
-];
+import {BOOK_SHELVES} from './config'
 
 class BooksApp extends React.Component {
     state = {
@@ -31,7 +17,6 @@ class BooksApp extends React.Component {
         showSearchPage: false
     };
 
-    bookShelves = BOOK_SHELVES;
 
     componentDidMount() {
         BooksAPI.getAll().then((books) => this.setState({books}));
@@ -39,11 +24,11 @@ class BooksApp extends React.Component {
 
     handleBookShelfChange = (id, shelf) => {
         this.setState(state => {
-            let newBooks = state.books.map((item) => {
-                if (item.id === id) {
-                    item.shelf = shelf;
+            let newBooks = state.books.map(book => {
+                if (book.id === id) {
+                    book.shelf = shelf;
                 }
-                return item;
+                return book;
             });
             return {books: newBooks};
         });
@@ -79,7 +64,7 @@ class BooksApp extends React.Component {
                         </div>
                         <div className="list-books-content">
                             <div>
-                                {this.bookShelves.map((shelf, index) => {
+                                {BOOK_SHELVES.map((shelf, index) => {
                                     let books = this.state.books.filter((book) => {
                                         return book.shelf === shelf.id;
                                     });

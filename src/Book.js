@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {BOOK_SHELVES} from './config'
+
 class Book extends React.Component {
     state = {
         shelf: this.props.shelf
@@ -23,9 +25,9 @@ class Book extends React.Component {
                     <div className="book-shelf-changer">
                         <select onChange={this.handleShelfChange.bind(this)}>
                             <option value="none" disabled>Move to...</option>
-                            <option value="currentlyReading">Currently Reading</option>
-                            <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>
+                            {BOOK_SHELVES.map((shelf) => {
+                                return <option value={shelf.id} selected={shelf.id === this.state.shelf}>{shelf.name}</option>;
+                            })}
                             <option value="none">None</option>
                         </select>
                     </div>
