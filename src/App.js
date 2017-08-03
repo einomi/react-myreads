@@ -24,12 +24,19 @@ class BooksApp extends React.Component {
 
     handleBookShelfChange = (id, shelf) => {
         this.setState(state => {
+            // Remove book if None value is selected
+            if (shelf === 'none') {
+                let newBooks = this.state.books.filter((book) => book.id !== id);
+                return {books: newBooks};
+            }
+
             let newBooks = state.books.map(book => {
                 if (book.id === id) {
                     book.shelf = shelf;
                 }
                 return book;
             });
+
             return {books: newBooks};
         });
     };
