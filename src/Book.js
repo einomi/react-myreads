@@ -23,17 +23,17 @@ class Book extends React.Component {
                         backgroundImage: `url("${this.props.imageLinks.smallThumbnail}")`
                     }}></div>
                     <div className="book-shelf-changer">
-                        <select onChange={this.handleShelfChange.bind(this)}>
+                        <select onChange={this.handleShelfChange.bind(this)} defaultValue={this.state.shelf}>
                             <option value="none" disabled>Move to...</option>
-                            {BOOK_SHELVES.map((shelf) => {
-                                return <option value={shelf.id} selected={shelf.id === this.state.shelf}>{shelf.name}</option>;
+                            {BOOK_SHELVES.map((shelf, index) => {
+                                return <option key={index} value={shelf.id}>{shelf.name}</option>;
                             })}
                             <option value="none">None</option>
                         </select>
                     </div>
                 </div>
                 <div className="book-title">{this.props.title}</div>
-                <div className="book-authors">Harper Lee</div>
+                <div className="book-authors">{this.props.author}</div>
             </div>
         );
     }
