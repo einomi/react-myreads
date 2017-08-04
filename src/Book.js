@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {BOOK_SHELVES} from './config'
+import { BOOK_SHELVES } from './config'
 
 class Book extends React.Component {
     state = {
