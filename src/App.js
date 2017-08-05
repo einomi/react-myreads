@@ -5,15 +5,29 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookList from './BookList'
 import Search from './Search'
+import Spinner from './Spinner'
 
 class BooksApp extends React.Component {
     state = {
         books: [],
+        spinnerIsVisible: false
     };
 
     componentDidMount() {
-        BooksAPI.getAll().then((books) => this.setState({books}));
+        this.showSpinner();
+        BooksAPI.getAll().then((books) => {
+            this.setState({books});
+            this.hideSpinner();
+        });
     }
+
+    showSpinner = () => {
+        this.setState({spinnerIsVisible: true});
+    };
+
+    hideSpinner = () => {
+        this.setState({spinnerIsVisible: false});
+    };
 
     handleChangeShelf = (bookToChange, shelf) => {
         // Remove book if None value is selected
@@ -25,10 +39,8 @@ class BooksApp extends React.Component {
         // Add book if it's current shelf is None
         if (bookToChange.shelf === 'none') {
             bookToChange.shelf = shelf;
-            BooksAPI.update({id: bookToChange.id}, shelf).then(() => {
+            this.updateShelfOnServer(bookToChange, shelf, () => {
                 this.addBook(bookToChange);
-            }).catch((error) => {
-                throw error;
             });
             return;
         }
@@ -38,16 +50,14 @@ class BooksApp extends React.Component {
     };
 
     removeBook = (bookToRemove) => {
-        BooksAPI.update({id: bookToRemove.id},'none').then(() => {
+        this.updateShelfOnServer(bookToRemove, 'none', () => {
             let newBooks = this.state.books.filter((book) => book.id !== bookToRemove.id);
             this.setState({books: newBooks});
-        }).catch((error) => {
-            throw error;
         });
     };
 
     changeShelf = (bookToChange, shelf) => {
-        BooksAPI.update({id: bookToChange.id}, shelf).then(() => {
+        this.updateShelfOnServer(bookToChange, shelf, () => {
             this.setState(state => {
                 let newBooks = state.books.map(book => {
                     if (book.id === bookToChange.id) {
@@ -57,8 +67,6 @@ class BooksApp extends React.Component {
                 });
                 return {books: newBooks};
             });
-        }).catch((error) => {
-            throw error;
         });
     };
 
@@ -72,9 +80,20 @@ class BooksApp extends React.Component {
         this.setState({books: newBooks});
     };
 
+    updateShelfOnServer(book, shelf, callback) {
+        this.showSpinner();
+        BooksAPI.update(book, shelf).then(() => {
+            callback();
+            this.hideSpinner();
+        }).catch((error) => {
+            throw error;
+        });
+    }
+
     render() {
         return (
             <div className="app">
+                <Spinner visible={this.state.spinnerIsVisible} />
                 <Route path="/" exact render={() => <BookList books={this.state.books} onBookShelfChange={this.handleChangeShelf} />} />
                 <Route path="/search" render={() => <Search books={this.state.books} onBookShelfChange={this.handleChangeShelf} onAddBook={this.addBook} />} />
             </div>
