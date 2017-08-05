@@ -37,7 +37,7 @@ class BooksApp extends React.Component {
     render() {
         return (
             <div className="app">
-                <Route path="/" render={() => <BookList books={this.state.books} onBookShelfChange={this.handleBookShelfChange} />} />
+                <Route path="/" exact render={() => <BookList books={this.state.books} onBookShelfChange={this.handleBookShelfChange} />} />
                 <Route path="/search" render={() => <Search />} />
             </div>
         );
