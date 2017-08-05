@@ -4,23 +4,27 @@ import { BOOK_SHELVES } from './config'
 
 class Book extends React.Component {
     state = {
-        shelf: this.props.shelf
+        shelf: this.props.bookObj.shelf
     };
 
-    handleShelfChange(event) {
-        let newShelf = event.target.value;
-        this.setState({shelf: newShelf});
-        this.props.onShelfChange(this.props.id, newShelf);
+    componentWillReceiveProps(nextProps) {
+        this.setState({shelf: nextProps.bookObj.shelf});
+    }
+
+    handleShelfChange(e) {
+        let newShelf = e.target.value;
+        this.props.onShelfChange(this.props.bookObj, newShelf);
     }
 
     render() {
+        const bookObj = this.props.bookObj;
         return (
             <div className="book">
                 <div className="book-top">
                     <div className="book-cover" style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: `url("${this.props.imageLinks.smallThumbnail}")`
+                        backgroundImage: `url("${bookObj.imageLinks.smallThumbnail}")`
                     }}></div>
                     <div className="book-shelf-changer">
                         <select onChange={this.handleShelfChange.bind(this)} defaultValue={this.state.shelf}>
@@ -32,8 +36,8 @@ class Book extends React.Component {
                         </select>
                     </div>
                 </div>
-                <div className="book-title">{this.props.title}</div>
-                <div className="book-authors">{this.props.authors.join(', ')}</div>
+                <div className="book-title">{bookObj.title}</div>
+                <div className="book-authors">{bookObj.authors ? bookObj.authors.join(', ') : ''}</div>
             </div>
         );
     }
