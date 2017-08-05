@@ -3,14 +3,6 @@ import React from 'react'
 import { BOOK_SHELVES } from './config'
 
 class Book extends React.Component {
-    state = {
-        shelf: this.props.bookObj.shelf
-    };
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({shelf: nextProps.bookObj.shelf});
-    }
-
     handleShelfChange(e) {
         let newShelf = e.target.value;
         this.props.onShelfChange(this.props.bookObj, newShelf);
@@ -27,7 +19,7 @@ class Book extends React.Component {
                         backgroundImage: `url("${bookObj.imageLinks.smallThumbnail}")`
                     }}></div>
                     <div className="book-shelf-changer">
-                        <select onChange={this.handleShelfChange.bind(this)} defaultValue={this.state.shelf}>
+                        <select onChange={this.handleShelfChange.bind(this)} defaultValue={bookObj.shelf}>
                             <option value="none" disabled>Move to...</option>
                             {BOOK_SHELVES.map((shelf, index) => {
                                 return <option key={index} value={shelf.id}>{shelf.name}</option>;
