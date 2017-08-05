@@ -95,7 +95,7 @@ class BooksApp extends React.Component {
             <div className="app">
                 <Spinner visible={this.state.spinnerIsVisible} />
                 <Route path="/" exact render={() => <BookList books={this.state.books} onBookShelfChange={this.handleChangeShelf} />} />
-                <Route path="/search" render={() => <Search books={this.state.books} onBookShelfChange={this.handleChangeShelf} onAddBook={this.addBook} />} />
+                <Route path="/search" render={() => <Search books={this.state.books} onBookShelfChange={this.handleChangeShelf} onAddBook={this.addBook} onShowSpinner={this.showSpinner} onHideSpinner={this.hideSpinner} />} />
             </div>
         );
     }
