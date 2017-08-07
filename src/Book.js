@@ -1,8 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { BOOK_SHELVES } from './config'
 
 class Book extends React.Component {
+    static propTypes = {
+        bookObj: PropTypes.object,
+        onShelfChange: PropTypes.func,
+        onAddBook: PropTypes.func
+    };
+
     handleShelfChange(e) {
         let newShelf = e.target.value;
         this.props.onShelfChange(this.props.bookObj, newShelf);

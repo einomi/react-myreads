@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import sortBy from 'sort-by'
+import PropTypes from 'prop-types'
 
 import { debounce } from './utils'
 import * as BooksAPI from './BooksAPI'
@@ -26,10 +27,17 @@ class Search extends React.Component {
         }, 300);
     }
 
+    static propTypes = {
+        books: PropTypes.array,
+        onBookShelfChange: PropTypes.func,
+        onAddBook: PropTypes.func,
+        onShowSpinner: PropTypes.func,
+        onHideSpinner: PropTypes.func
+    };
+
     state = {
         results: []
     };
-
 
     handleInputChange = e => {
         let query = e.target.value;

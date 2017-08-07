@@ -1,9 +1,16 @@
 import React from 'react'
 import sortBy from 'sort-by'
+import PropTypes from 'prop-types'
 
 import Book from './Book'
 
 class BookShelf extends React.Component {
+    static propTypes = {
+        name: PropTypes.string,
+        books: PropTypes.array,
+        onBookShelfChange: PropTypes.func
+    };
+
     render() {
         return (
             <div className="bookshelf">

@@ -1,13 +1,20 @@
 import React from 'react'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 class Spinner extends React.Component {
+    static propTypes = {
+        visible: PropTypes.bool
+    };
+
     state = {
         visible: this.props.visible
     };
 
     componentWillReceiveProps(nextProps) {
-        this.setState({visible: nextProps.visible});
+        if (nextProps.visible !== this.state.visible) {
+            this.setState({visible: nextProps.visible});
+        }
     }
 
     render() {

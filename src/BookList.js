@@ -1,10 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import BookShelf from './BookShelf'
 import { BOOK_SHELVES } from './config'
 
 class BookList extends React.Component {
+    static propTypes = {
+        books: PropTypes.array,
+        onBookShelfChange: PropTypes.func,
+    };
+
     render() {
         return (<div className="list-books">
             <div className="list-books-title">
