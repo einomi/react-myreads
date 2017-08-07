@@ -18,10 +18,21 @@ class Search extends React.Component {
             this.props.onShowSpinner();
             BooksAPI.search(query).then((data) => {
                 this.props.onHideSpinner();
+
                 if (data.hasOwnProperty('error')) {
                     this.setState({results: []});
                     return;
                 }
+
+                // Check if book is on a shelf
+                data.forEach((book, index) => {
+                   this.props.books.forEach(bookInState => {
+                       if (book.id === bookInState.id) {
+                           data[index].shelf = bookInState.shelf;
+                       }
+                   }) ;
+                });
+
                 this.setState({results: data});
             });
         }, 300);
