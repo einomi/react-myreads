@@ -1,6 +1,6 @@
-# React MyReads (Udacity training project)
+# React MyReads
 
-Project uses [Create React App](https://github.com/facebookincubator/create-react-app) for bootstraping.
+This is Udacity training project. [Create React App](https://github.com/facebookincubator/create-react-app) is used for bootstraping.
 
 ## Installation
 To install project, run the following:
