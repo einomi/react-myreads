@@ -195,6 +195,7 @@ body, .app {
     opacity: 0;
     transition: opacity 0.1s ease-out;
     z-index: 99;
+    pointer-events: none;
 }
 
 .spinner-container._visible {

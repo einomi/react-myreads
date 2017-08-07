@@ -19,6 +19,10 @@ class BooksApp extends React.Component {
             this.setState({books});
             this.hideSpinner();
         });
+
+        // BooksAPI.search('re').then(books => {
+        //     books.forEach(book => console.log(book.shelf));
+        // });
     }
 
     showSpinner = () => {
@@ -37,7 +41,7 @@ class BooksApp extends React.Component {
         }
 
         // Add book if it's current shelf is None
-        if (bookToChange.shelf === 'none') {
+        if (bookToChange.shelf === 'none' || bookToChange.shelf === undefined) {
             bookToChange.shelf = shelf;
             this.updateShelfOnServer(bookToChange, shelf, () => {
                 this.addBook(bookToChange);
@@ -71,6 +75,7 @@ class BooksApp extends React.Component {
     };
 
     addBook = (bookToAdd) => {
+        console.log(bookToAdd);
         let bookExists = this.state.books.some((book) => book.id === bookToAdd.id);
         if (bookExists) {
             return;
@@ -94,8 +99,19 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
                 <Spinner visible={this.state.spinnerIsVisible} />
-                <Route path="/" exact render={() => <BookList books={this.state.books} onBookShelfChange={this.handleChangeShelf} />} />
-                <Route path="/search" render={() => <Search books={this.state.books} onBookShelfChange={this.handleChangeShelf} onAddBook={this.addBook} onShowSpinner={this.showSpinner} onHideSpinner={this.hideSpinner} />} />
+                <Route path="/" exact render={() =>
+                    <BookList
+                        books={this.state.books}
+                        onBookShelfChange={this.handleChangeShelf} />}
+                />
+                <Route path="/search" render={() =>
+                    <Search
+                        books={this.state.books}
+                        onBookShelfChange={this.handleChangeShelf}
+                        onAddBook={this.addBook}
+                        onShowSpinner={this.showSpinner}
+                        onHideSpinner={this.hideSpinner} />}
+                />
             </div>
         );
     }

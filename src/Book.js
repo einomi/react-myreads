@@ -10,6 +10,7 @@ class Book extends React.Component {
 
     render() {
         const bookObj = this.props.bookObj;
+        console.log(bookObj);
         return (
             <div className="book">
                 <div className="book-top">
@@ -19,7 +20,7 @@ class Book extends React.Component {
                         backgroundImage: `url("${bookObj.imageLinks.smallThumbnail}")`
                     }}></div>
                     <div className="book-shelf-changer">
-                        <select onChange={this.handleShelfChange.bind(this)} defaultValue={bookObj.shelf}>
+                        <select onChange={this.handleShelfChange.bind(this)} defaultValue={bookObj.shelf || 'none'}>
                             <option value="none" disabled>Move to...</option>
                             {BOOK_SHELVES.map((shelf, index) => {
                                 return <option key={index} value={shelf.id}>{shelf.name}</option>;
