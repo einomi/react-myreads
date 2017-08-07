@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import sortBy from 'sort-by'
 
 import { debounce } from './utils'
 import * as BooksAPI from './BooksAPI'
@@ -45,7 +46,7 @@ class Search extends React.Component {
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
-                    {this.state.results.map((book, index) => {
+                    {this.state.results.sort(sortBy('title')).map((book, index) => {
                         return (
                             <li key={index}>
                                 <Book bookObj={book} onShelfChange={this.props.onBookShelfChange} onAddBook={this.props.onAddBook} />

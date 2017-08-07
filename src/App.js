@@ -19,10 +19,6 @@ class BooksApp extends React.Component {
             this.setState({books});
             this.hideSpinner();
         });
-
-        // BooksAPI.search('re').then(books => {
-        //     books.forEach(book => console.log(book.shelf));
-        // });
     }
 
     showSpinner = () => {
@@ -75,7 +71,6 @@ class BooksApp extends React.Component {
     };
 
     addBook = (bookToAdd) => {
-        console.log(bookToAdd);
         let bookExists = this.state.books.some((book) => book.id === bookToAdd.id);
         if (bookExists) {
             return;

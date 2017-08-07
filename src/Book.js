@@ -10,7 +10,6 @@ class Book extends React.Component {
 
     render() {
         const bookObj = this.props.bookObj;
-        console.log(bookObj);
         return (
             <div className="book">
                 <div className="book-top">
